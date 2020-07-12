@@ -1,4 +1,4 @@
-import { startOfHour, isBefore, getHours, format } from 'date-fns';
+import { startOfHour, isBefore, getHours, format, parseISO } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
@@ -56,6 +56,8 @@ class CreateAppointmentServices {
       user_id,
       date: appointmentDate,
     });
+
+    console.log(appointment);
 
     const dateFormatted = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm'h'");
 

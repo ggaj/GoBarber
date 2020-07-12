@@ -22,7 +22,7 @@ interface SignUpFormData {
   password: string;
 }
 
-const ForgotPassword: React.FC = () => {
+const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
@@ -103,4 +103,4 @@ const ForgotPassword: React.FC = () => {
   );
 };
 
-export default ForgotPassword;
+export default SignUp;

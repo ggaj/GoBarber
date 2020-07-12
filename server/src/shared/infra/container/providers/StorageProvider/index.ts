@@ -12,6 +12,6 @@ const providers = {
 };
 
 container.registerSingleton<IStorageProvider>(
-  'StorateProvider',
+  'StorageProvider',
   providers[uploadConfig.driver],
 );

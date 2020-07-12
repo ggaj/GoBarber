@@ -1,10 +1,10 @@
-import { injectable, inject } from "tsyringe";
-import { isAfter, addHours } from "date-fns";
+import { injectable, inject } from 'tsyringe';
+import { isAfter, addHours } from 'date-fns';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IUserTokensRepository from "@modules/users/repositories/IUserTokensRepository";
-import AppError from "@shared/errors/AppError";
-import IHashProvider from "../providers/HashProvider/models/IHashProvider";
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
+import AppError from '@shared/errors/AppError';
+import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   token: string;
@@ -21,33 +21,32 @@ class ResetPasswordServices {
     private userTokensRepository: IUserTokensRepository,
 
     @inject('HashProvider')
-    private hashProvider: IHashProvider
-  ){}
-
+    private hashProvider: IHashProvider,
+  ) {}
 
   public async execute({ password, token }: IRequest): Promise<void> {
-    const userToken = await this.userTokensRepository.findByToken(token)
+    const userToken = await this.userTokensRepository.findByToken(token);
 
-    if(!userToken){
-      throw new AppError('User token does not exists')
+    if (!userToken) {
+      throw new AppError('User token does not exists');
     }
 
-    const user = await this.userRepository.findById(userToken.user_id)
+    const user = await this.userRepository.findById(userToken.user_id);
 
-    if(!user){
-      throw new AppError('User does not exists')
+    if (!user) {
+      throw new AppError('User does not exists');
     }
 
-    const tokenCreatedAt = userToken.created_at
-    const compareDate = addHours(tokenCreatedAt, 2)
+    const tokenCreatedAt = userToken.created_at;
+    const compareDate = addHours(tokenCreatedAt, 2);
 
-    if(isAfter(Date.now(), compareDate)){
-      throw new AppError('Token expired')
+    if (isAfter(Date.now(), compareDate)) {
+      throw new AppError('Token expired');
     }
 
-    user.password = await this.hashProvider.generateHash(password)
+    user.password = await this.hashProvider.generateHash(password);
 
-    await this.userRepository.save(user)
+    await this.userRepository.save(user);
   }
 }
 
