@@ -29,11 +29,10 @@ class UsersRepository implements IUsersRepository {
 
     if (execpt_user_id) {
       users = await this.ormRepository.find({
-        where: { id: Not(execpt_user_id) },
-        relations: ['user'],
+        where: { id: Not(execpt_user_id) }
       });
     } else {
-      users = await this.ormRepository.find({ relations: ['user'] });
+      users = await this.ormRepository.find();
     }
 
     return users;

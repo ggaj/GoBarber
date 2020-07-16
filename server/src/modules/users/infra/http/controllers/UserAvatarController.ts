@@ -8,7 +8,6 @@ class UsersAvatarController {
   public async update(request: Request, response: Response): Promise<Response> {
     const updateAvatarUser = container.resolve(UpdateAvatarUserServices);
 
-    console.log(request.file.filename);
     const user = await updateAvatarUser.execute({
       user_id: request.user.id,
       avatarFilename: request.file.filename,

@@ -20,9 +20,10 @@ class ListProfileServices {
   ) {}
 
   public async execute({ user_id }: IRequest): Promise<User[]> {
-    let users = await this.cacheProvider.recover<User[]>(
-      `providers-list:${user_id}`,
-    );
+    // let users = await this.cacheProvider.recover<User[]>(
+    //   `providers-list:${user_id}`,
+    // );
+    let users;
 
     if (!users) {
       users = await this.userRepository.findAllProviders(user_id);
